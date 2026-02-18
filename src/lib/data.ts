@@ -1,7 +1,8 @@
 // =============================================================================
-// V1 Hardcoded Content
+// Marketing Site Content
 // =============================================================================
-// All content lives here. In V2, replace individual exports with API/MCP calls.
+// Static marketing copy and configuration.
+// Dynamic content (Research Desk answers, Wisdom Engine hook) fetched from API.
 // Components must not embed content inline — they receive it via props.
 // =============================================================================
 
@@ -57,95 +58,9 @@ export const homeTransparency = {
 }
 
 // -----------------------------------------------------------------------------
-// HOOK PAGE — /wisdom-engine
+// WISDOM ENGINE PAGE — /wisdom-engine
 // -----------------------------------------------------------------------------
-
-export const hookPage = {
-  eyebrow: 'HOOK CONTENT · CACHED · STABLE URL',
-  title: 'What Is a Wisdom Engine?',
-
-  // Body paragraphs with optional inline citations
-  paragraphs: [
-    {
-      id: 'p1',
-      text: 'A wisdom engine is not a content management system. It does not store articles, manage slugs, or publish pages. It manages understanding — a structured, searchable, editorially-governed space of knowledge that produces content on demand, in any format, at any level of depth, for any audience.',
-      citation: null,
-    },
-    {
-      id: 'p2',
-      text: 'Every CMS solves the same problem: how do you get structured content from authors to readers? The answer has always been some combination of templates, workflows, and taxonomies. But the schema trap — the assumption that you must define the shape of knowledge before you can manage it — is the original sin of the industry. Wisdom engines are schema-free.',
-      citation: {
-        artifact: {
-          title: 'About 5 Years Publish 6 — The Schema Trap',
-          source: 'Wren\'s Watch, About 5 Years Publish 6, Ch. 4',
-          artifactId: '9d05f24a-4cd8-4b81-9227-6aa4bc4b83c2',
-        } as CitationArtifact,
-        text: 'schema trap',
-      },
-    },
-    {
-      id: 'p3',
-      text: 'The traditional pipeline runs: document → template → page. The wisdom engine pipeline runs: source material → manifold → projection. A manifold is not a database of articles. It is a semantic space — a high-dimensional embedding of your organization\'s accumulated knowledge, indexed by meaning rather than by key.',
-      citation: null,
-    },
-    {
-      id: 'pullquote',
-      text: '',
-      citation: null,
-      isPullQuote: true,
-      pullQuoteText:
-        'Content management manages artifacts. Knowledge management manages documentation. A wisdom engine manages understanding.',
-    },
-    {
-      id: 'p4',
-      text: 'What makes a wisdom engine different from a retrieval-augmented generation system is the editorial layer. RAG retrieves; it does not shape. A wisdom engine applies editorial constitution — tone, bias, brevity, formality, confidence — to every projection. The same knowledge can be projected as a scholarly article, a casual briefing, or a three-sentence answer, without touching the source material.',
-      citation: {
-        artifact: {
-          title: 'Latent Vector — Chapter 3: Knowledge Architectures',
-          source: 'David Habib, Latent Vector (2025), Ch. 3',
-          artifactId: '01185742-ad31-4a2c-b0c7-49cdf0126562',
-        } as CitationArtifact,
-        text: 'editorial constitution',
-      },
-    },
-    {
-      id: 'p5',
-      text: 'Pull-to-push is the operational shift. Traditional content is pulled: an editor decides to write something, creates a draft, routes it through approval, and publishes it. Hook content is pushed: the system detects what knowledge is relevant to what audience at what moment, and generates the projection automatically. Human editors do not write; they govern.',
-      citation: null,
-    },
-    {
-      id: 'p6',
-      text: 'The wisdom engine does not replace editorial judgment. It scales it. A single editorial constitution — a few hundred tokens of guidance — governs every projection across every surface. The voice is consistent. The citations are automatic. The content is always current. This is not AI-generated slop. It is structured editorial intelligence applied at machine speed.',
-      citation: null,
-    },
-  ],
-
-  exploratoryText:
-    'The shift from pull to push changes everything about how an organization relates to its own knowledge. In a traditional CMS, knowledge depreciates. Articles go stale, editors forget to update them, and the gap between what an organization knows and what it publishes grows wider every month. Teams spend more time maintaining old content than producing new insight. The editorial calendar becomes a graveyard of good intentions.\n\nIn a wisdom engine, knowledge compounds. Every source document added to the manifold enriches every future projection. The manifold grows denser, more connected, more useful — automatically. A new insight does not require a new article. It requires a new source, and the manifold reorganizes itself around it.\n\nThis is what Latent Vector calls the latent vector problem: the knowledge that organizations hold is always richer than the knowledge they publish. The gap is not a talent problem or a process problem. It is an architectural problem. Traditional CMS tools were designed to manage what is published, not to cultivate what is known. Pilot inverts this. The manifold is the product. The publications are projections from it.',
-
-  exploratoryTopics: [
-    'Pull-to-Push Architecture',
-    'Editorial Constitution',
-    'Manifold Density',
-    'Provenance Tracking',
-    'Hook vs Exploratory',
-  ],
-
-  provenanceFooter: {
-    artifactCount: 6,
-    voiceSettings: 'assertive, moderate depth, scholarly',
-    timestamp: new Date().toISOString(),
-  },
-
-  generatedFooter: {
-    date: new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }),
-    libraryUrl: 'https://console.pilotwme.com/dashboard/artifacts',
-  },
-}
+// Content now fetched from API via /api/hook endpoint (featured hook projection)
 
 // -----------------------------------------------------------------------------
 // MANIFOLD EXPLORER — /manifold
@@ -215,4 +130,4 @@ export const researchSuggestions = [
   'How does the editorial constitution work?',
 ]
 
-// researchAnswer and researchSources removed in V2 — Research Desk now streams live from the API
+// Research Desk now streams live answers from the API via /api/ask endpoint
