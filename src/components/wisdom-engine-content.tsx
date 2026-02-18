@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Eyebrow } from './eyebrow'
-import { ScrollHint } from './scroll-hint'
 import { StreamingParagraph } from './streaming-paragraph'
 import { GeneratedFooter } from './generated-footer'
 
@@ -14,7 +13,7 @@ interface WisdomEngineContentProps {
 
 export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomEngineContentProps) {
   const [exploratoryActive, setExploratoryActive] = useState(false)
-  const triggerRef = useRef<HTMLDivElement>(null)
+  const [showHint, setShowHint] = useState(true)
 
   // Remove markdown title if present, split content into main (60%) and exploratory (40%)
   const cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
@@ -22,33 +21,17 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   const mainContent = cleanContent.slice(0, splitPoint).trim()
   const exploratoryContent = cleanContent.slice(splitPoint).trim()
 
-  // Use IntersectionObserver to detect when user scrolls to trigger point
+  // Simple approach: activate exploratory section after 3 seconds
   useEffect(() => {
-    const trigger = triggerRef.current
-    if (!trigger) return
+    console.log('WisdomEngineContent mounted, will activate exploratory in 3s')
+    const timer = setTimeout(() => {
+      console.log('Activating exploratory section now')
+      setExploratoryActive(true)
+      setShowHint(false)
+    }, 3000)
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !exploratoryActive) {
-            console.log('Trigger element visible - activating exploratory section')
-            setExploratoryActive(true)
-          }
-        })
-      },
-      {
-        // Trigger when element is 50% visible
-        threshold: 0.5,
-        rootMargin: '0px 0px -20% 0px', // Trigger a bit before reaching bottom
-      }
-    )
-
-    observer.observe(trigger)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [exploratoryActive])
+    return () => clearTimeout(timer)
+  }, [])
 
   const formattedDate = new Date(generatedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -71,20 +54,20 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
           </p>
         ))}
 
-        {/* Trigger point for exploratory section */}
-        {!exploratoryActive && (
-          <div ref={triggerRef} className="flex flex-col items-center gap-3 py-8">
+        {/* Scroll hint - visible until exploratory activates */}
+        {showHint && (
+          <div className="flex flex-col items-center gap-3 py-8">
             <p className="text-slate-light text-sm animate-pulse">
               ↓ Keep scrolling to see exploratory content ↓
             </p>
             <div className="w-[200px] h-[3px] bg-[#E2E8F0] rounded-full">
-              <div className="h-full w-0 bg-blue rounded-full animate-pulse" />
+              <div className="h-full w-1/3 bg-blue rounded-full animate-pulse" />
             </div>
           </div>
         )}
       </article>
 
-      {/* Exploratory zone */}
+      {/* Exploratory zone - activates after 3s */}
       {exploratoryActive && exploratoryContent && (
         <section className="border-b border-[#E2E8F0] py-12 max-w-2xl">
           <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
