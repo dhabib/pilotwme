@@ -11,7 +11,14 @@ interface WisdomEngineContentProps {
 
 export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomEngineContentProps) {
   // Remove markdown title if present
-  const cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
+  let cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
+
+  // Strip markdown syntax
+  cleanContent = cleanContent
+    .replace(/^##\s+/gm, '') // Remove ## headings
+    .replace(/^###\s+/gm, '') // Remove ### headings
+    .replace(/\(Source \d+\)/g, '') // Remove (Source 1) citations
+    .trim()
 
   const formattedDate = new Date(generatedAt).toLocaleDateString('en-US', {
     year: 'numeric',
