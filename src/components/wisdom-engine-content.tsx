@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Eyebrow } from './eyebrow'
 import { StreamingParagraph } from './streaming-paragraph'
 import { GeneratedFooter } from './generated-footer'
@@ -13,7 +13,7 @@ interface WisdomEngineContentProps {
 
 export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomEngineContentProps) {
   const [exploratoryActive, setExploratoryActive] = useState(false)
-  const [showHint, setShowHint] = useState(true)
+  const exploratoryRef = useRef<HTMLElement>(null)
 
   // Remove markdown title if present, split content into main (60%) and exploratory (40%)
   const cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
@@ -21,17 +21,34 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   const mainContent = cleanContent.slice(0, splitPoint).trim()
   const exploratoryContent = cleanContent.slice(splitPoint).trim()
 
-  // Simple approach: activate exploratory section after 3 seconds
+  // Use IntersectionObserver on the exploratory section itself
+  // When it enters viewport, activate streaming
   useEffect(() => {
-    console.log('WisdomEngineContent mounted, will activate exploratory in 3s')
-    const timer = setTimeout(() => {
-      console.log('Activating exploratory section now')
-      setExploratoryActive(true)
-      setShowHint(false)
-    }, 3000)
+    const section = exploratoryRef.current
+    if (!section) return
 
-    return () => clearTimeout(timer)
-  }, [])
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !exploratoryActive) {
+            console.log('Exploratory section entering viewport - activating streaming')
+            setExploratoryActive(true)
+          }
+        })
+      },
+      {
+        // Trigger when top of section is 80% down the viewport
+        threshold: 0,
+        rootMargin: '0px 0px -20% 0px',
+      }
+    )
+
+    observer.observe(section)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [exploratoryActive])
 
   const formattedDate = new Date(generatedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -54,8 +71,8 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
           </p>
         ))}
 
-        {/* Scroll hint - visible until exploratory activates */}
-        {showHint && (
+        {/* Scroll hint at end of hook content */}
+        {!exploratoryActive && (
           <div className="flex flex-col items-center gap-3 py-8">
             <p className="text-slate-light text-sm animate-pulse">
               ↓ Keep scrolling to see exploratory content ↓
@@ -67,14 +84,17 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
         )}
       </article>
 
-      {/* Exploratory zone - activates after 3s */}
-      {exploratoryActive && exploratoryContent && (
-        <section className="border-b border-[#E2E8F0] py-12 max-w-2xl">
-          <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
+      {/* Exploratory zone - always in DOM to prevent layout shift */}
+      <section
+        ref={exploratoryRef}
+        className="border-b border-[#E2E8F0] py-12 max-w-2xl"
+      >
+        <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
 
+        {exploratoryContent && (
           <StreamingParagraph text={exploratoryContent} active={exploratoryActive} speed={3} />
-        </section>
-      )}
+        )}
+      </section>
 
       <GeneratedFooter
         date={formattedDate}
