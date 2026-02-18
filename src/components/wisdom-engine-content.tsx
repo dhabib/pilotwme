@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Eyebrow } from './eyebrow'
 import { StreamingParagraph } from './streaming-paragraph'
 import { GeneratedFooter } from './generated-footer'
@@ -11,6 +12,8 @@ interface WisdomEngineContentProps {
 }
 
 export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomEngineContentProps) {
+  const [exploratoryActive, setExploratoryActive] = useState(false)
+
   // Remove markdown title if present
   let cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
 
@@ -33,7 +36,7 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
 
   return (
     <>
-      {/* Main hook content - shows immediately */}
+      {/* Main hook content */}
       <article className="border-b border-[#E2E8F0] py-12 max-w-2xl">
         <Eyebrow text="HOOK CONTENT · CACHED · STABLE URL" className="mb-4" />
         <h1 className="font-serif text-[38px] md:text-[48px] leading-tight text-ink mb-8">
@@ -45,14 +48,27 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
             {para.trim()}
           </p>
         ))}
+
+        {/* Expand button */}
+        {!exploratoryActive && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setExploratoryActive(true)}
+              className="px-6 py-3 bg-blue text-white font-medium rounded-lg hover:bg-blue-dark transition-colors"
+            >
+              Get more from the Wisdom Engine →
+            </button>
+          </div>
+        )}
       </article>
 
-      {/* Exploratory section - streams in immediately */}
-      <section className="border-b border-[#E2E8F0] py-12 max-w-2xl">
-        <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
-
-        <StreamingParagraph text={exploratoryContent} active={true} speed={3} />
-      </section>
+      {/* Exploratory section - only shown after clicking expand */}
+      {exploratoryActive && (
+        <section className="border-b border-[#E2E8F0] py-12 max-w-2xl">
+          <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
+          <StreamingParagraph text={exploratoryContent} active={true} speed={3} />
+        </section>
+      )}
 
       <GeneratedFooter
         date={formattedDate}
