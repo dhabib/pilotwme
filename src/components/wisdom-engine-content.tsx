@@ -28,14 +28,33 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
     const handleScroll = () => {
       const el = hookRef.current
       if (!el) return
+
       const rect = el.getBoundingClientRect()
-      const progress = Math.min(1, -rect.top / (el.offsetHeight * 0.55))
+      const viewportHeight = window.innerHeight
+
+      // Calculate how much of the article has been scrolled through
+      // When rect.top is 0, article top is at viewport top
+      // When rect.top is negative, article has scrolled up past viewport
+      const scrolledPastTop = Math.max(0, -rect.top)
+      const articleHeight = el.offsetHeight
+
+      // Progress: how much of the article has scrolled past viewport top
+      const progress = Math.min(1, scrolledPastTop / (articleHeight * 0.55))
       setScrollProgress(Math.max(0, progress))
 
-      if (!exploratoryActive && -rect.top / el.offsetHeight >= 0.55) {
+      // Trigger exploratory when we've scrolled through 55% of the article
+      // OR when the bottom of the article is approaching the middle of the viewport
+      const bottomOfArticle = rect.bottom
+      const triggerPoint = viewportHeight * 0.6
+
+      if (!exploratoryActive && (progress >= 1 || bottomOfArticle < triggerPoint)) {
+        console.log('Triggering exploratory section', { progress, bottomOfArticle, triggerPoint })
         setExploratoryActive(true)
       }
     }
+
+    // Run once on mount to check initial position
+    handleScroll()
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
