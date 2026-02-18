@@ -25,13 +25,25 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   // When it enters viewport, activate streaming
   useEffect(() => {
     const section = exploratoryRef.current
-    if (!section) return
+    if (!section) {
+      console.log('No exploratory ref found')
+      return
+    }
+
+    console.log('Setting up IntersectionObserver for exploratory section')
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          console.log('Intersection event:', {
+            isIntersecting: entry.isIntersecting,
+            intersectionRatio: entry.intersectionRatio,
+            boundingClientRect: entry.boundingClientRect,
+            exploratoryActive,
+          })
+
           if (entry.isIntersecting && !exploratoryActive) {
-            console.log('Exploratory section entering viewport - activating streaming')
+            console.log('✅ Activating exploratory streaming NOW')
             setExploratoryActive(true)
           }
         })
@@ -46,6 +58,7 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
     observer.observe(section)
 
     return () => {
+      console.log('Cleaning up IntersectionObserver')
       observer.disconnect()
     }
   }, [exploratoryActive])
@@ -88,11 +101,19 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
       <section
         ref={exploratoryRef}
         className="border-b border-[#E2E8F0] py-12 max-w-2xl"
+        style={{ minHeight: '200px' }}
       >
-        <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
-
-        {exploratoryContent && (
-          <StreamingParagraph text={exploratoryContent} active={exploratoryActive} speed={3} />
+        {exploratoryActive ? (
+          <>
+            <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
+            {exploratoryContent && (
+              <StreamingParagraph text={exploratoryContent} active={true} speed={3} />
+            )}
+          </>
+        ) : (
+          <div className="text-slate-light text-sm text-center py-12">
+            {/* Placeholder to maintain layout */}
+          </div>
         )}
       </section>
 
