@@ -44,8 +44,8 @@ export const homeCards = [
 export const homeTransparency = {
   heading: 'This site runs on Pilot.',
   body: [
-    'Everything you are reading was projected by Pilot, shaped by two source books: Latent Vector by David Habib, and About 5 Years Publish 6, published by Wren\'s Watch. Neither was written for this site. Pilot ingested them, built a manifold, and has been projecting content ever since.',
-    'This transparency is not a legal disclaimer. It is the product demonstrating its own principle: that the origin of every claim should be traceable, that editorial voice should be configurable, and that knowledge should compound rather than depreciate.',
+    'Much of the content here was projected by Pilot, informed by two source books (David Habib\'s Latent Vector and About Five Years) and a few of the requirements documents that described our goals for Pilot WME. Pilot ingested them, built a manifold, and has been projecting content ever since. With clear provenance — lineage from each piece of content back to its source in the manifold.',
+    'This transparency is not a legal disclaimer. It is the product demonstrating its own principle: that the origin of every claim should be traceable, that editorial voice should be paramount, and that knowledge should compound rather than depreciate.',
   ],
   citedBook: {
     artifact: {

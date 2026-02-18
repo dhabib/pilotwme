@@ -34,6 +34,14 @@ export default function HomePage() {
           <Link href="/research-desk">
             <Button variant="outline">Ask Pilot anything</Button>
           </Link>
+          <a
+            href="https://peek.pilotwme.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 bg-white border border-[#E2E8F0] text-ink hover:border-blue hover:text-blue"
+          >
+            Peek behind the curtain
+          </a>
         </div>
       </section>
 
@@ -58,19 +66,14 @@ export default function HomePage() {
           </h2>
           {homeTransparency.body.map((para, i) => (
             <p key={i} className="text-slate-light leading-relaxed mb-4 text-base">
-              {i === 1 ? (
-                <>
-                  {para.split('Pilot always cites its sources')[0]}
-                  <Cite artifact={homeTransparency.citedBook.artifact}>
-                    {homeTransparency.citedBook.quote}
-                  </Cite>
-                  {'. Pilot always cites its sources.'}
-                </>
-              ) : (
-                para
-              )}
+              {para}
             </p>
           ))}
+          <p className="text-slate-light leading-relaxed mb-4 text-base italic">
+            <Cite artifact={homeTransparency.citedBook.artifact}>
+              {homeTransparency.citedBook.quote}
+            </Cite>
+          </p>
         </div>
       </section>
 
