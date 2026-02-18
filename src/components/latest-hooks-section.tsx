@@ -9,29 +9,27 @@ interface Hook {
 }
 
 export async function LatestHooksSection() {
-  // Fetch hooks server-side at build time
+  const PILOT_API_URL = process.env.PILOT_API_URL || 'http://localhost:3001'
+  const PILOT_TENANT_ID = process.env.PILOT_TENANT_ID || ''
+
   let hooks: Hook[] = []
-  let error = false
 
   try {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3003'
-    const res = await fetch(`${siteUrl}/api/hooks`, {
-      next: { revalidate: 3600 }
-    })
+    const res = await fetch(
+      `${PILOT_API_URL}/api/v1/public/hooks?tenantId=${PILOT_TENANT_ID}&limit=3`,
+      { next: { revalidate: 3600 } }
+    )
 
     if (res.ok) {
       hooks = await res.json()
     } else {
       console.error('[LatestHooksSection] Failed to fetch hooks:', res.status)
-      error = true
     }
   } catch (err) {
     console.error('[LatestHooksSection] Fetch error:', err)
-    error = true
   }
 
-  // Don't render section if no hooks or error
-  if (error || hooks.length === 0) {
+  if (hooks.length === 0) {
     return null
   }
 
