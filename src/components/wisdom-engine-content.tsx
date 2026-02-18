@@ -17,10 +17,11 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   const [scrollProgress, setScrollProgress] = useState(0)
   const hookRef = useRef<HTMLElement>(null)
 
-  // Split content into main (60%) and exploratory (40%) sections
-  const splitPoint = Math.floor(hookContent.length * 0.6)
-  const mainContent = hookContent.slice(0, splitPoint).trim()
-  const exploratoryContent = hookContent.slice(splitPoint).trim()
+  // Remove markdown title if present, split content into main (60%) and exploratory (40%)
+  const cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
+  const splitPoint = Math.floor(cleanContent.length * 0.6)
+  const mainContent = cleanContent.slice(0, splitPoint).trim()
+  const exploratoryContent = cleanContent.slice(splitPoint).trim()
 
   // Track scroll position for the hint bar
   useEffect(() => {
@@ -69,7 +70,7 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
         <section className="border-b border-[#E2E8F0] py-12 max-w-2xl">
           <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-4" />
 
-          <StreamingParagraph text={exploratoryContent} active={exploratoryActive} speed={12} />
+          <StreamingParagraph text={exploratoryContent} active={exploratoryActive} speed={3} />
         </section>
       )}
 
