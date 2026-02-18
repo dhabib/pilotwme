@@ -6,33 +6,24 @@ import { DeskBox } from '@/components/desk-box'
 import { DeskInput } from '@/components/desk-input'
 import { DeskResponse } from '@/components/desk-response'
 import { SuggestionPills } from '@/components/suggestion-pills'
-import {
-  researchDeskPage,
-  researchSuggestions,
-  researchAnswer,
-  researchSources,
-} from '@/lib/data'
+import { useAskStream } from '@/hooks/use-ask-stream'
+import { researchDeskPage, researchSuggestions } from '@/lib/data'
 
 export default function ResearchDeskPage() {
   const [query, setQuery] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const [streaming, setStreaming] = useState(false)
+  const { answer, sources, streaming, error, submit, reset } = useAskStream()
 
   const handleSubmit = (q: string) => {
     setQuery(q)
     setSubmitted(true)
-    setStreaming(true)
-
-    // In V1, simulate stream completion after text reveal
-    const charCount = researchAnswer.length
-    const duration = charCount * 12 + 500 // 12ms per char + buffer
-    setTimeout(() => setStreaming(false), duration)
+    submit(q)
   }
 
   const handleReset = () => {
     setSubmitted(false)
-    setStreaming(false)
     setQuery('')
+    reset()
   }
 
   return (
@@ -48,7 +39,7 @@ export default function ResearchDeskPage() {
       <div className="max-w-2xl">
         <DeskBox>
           <DeskInput
-            value={submitted ? query : query}
+            value={query}
             onChange={setQuery}
             onSubmit={handleSubmit}
             placeholder={researchDeskPage.placeholder}
@@ -56,13 +47,14 @@ export default function ResearchDeskPage() {
 
           {submitted && (
             <DeskResponse
-              answer={researchAnswer}
+              answer={answer}
               streaming={streaming}
-              sources={researchSources}
+              sources={sources}
+              error={error}
             />
           )}
 
-          {submitted && !streaming && (
+          {submitted && !streaming && !error && (
             <div className="px-4 pb-4">
               <button
                 onClick={handleReset}

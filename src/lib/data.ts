@@ -5,7 +5,7 @@
 // Components must not embed content inline — they receive it via props.
 // =============================================================================
 
-import { ManifoldRegion, VoiceSlider, CitationArtifact, Source } from './types'
+import { ManifoldRegion, VoiceSlider, CitationArtifact } from './types'
 
 // -----------------------------------------------------------------------------
 // HOME PAGE
@@ -50,6 +50,7 @@ export const homeTransparency = {
     artifact: {
       title: 'Latent Vector — Foreword',
       source: 'David Habib, Latent Vector (2025), p. i',
+      artifactId: '01185742-ad31-4a2c-b0c7-49cdf0126562',
     } as CitationArtifact,
     quote: 'AI systems can understand information without requiring predetermined categories',
   },
@@ -77,6 +78,7 @@ export const hookPage = {
         artifact: {
           title: 'About 5 Years Publish 6 — The Schema Trap',
           source: 'Wren\'s Watch, About 5 Years Publish 6, Ch. 4',
+          artifactId: '9d05f24a-4cd8-4b81-9227-6aa4bc4b83c2',
         } as CitationArtifact,
         text: 'schema trap',
       },
@@ -101,6 +103,7 @@ export const hookPage = {
         artifact: {
           title: 'Latent Vector — Chapter 3: Knowledge Architectures',
           source: 'David Habib, Latent Vector (2025), Ch. 3',
+          artifactId: '01185742-ad31-4a2c-b0c7-49cdf0126562',
         } as CitationArtifact,
         text: 'editorial constitution',
       },
@@ -140,7 +143,7 @@ export const hookPage = {
       month: 'long',
       day: 'numeric',
     }),
-    libraryUrl: '#',
+    libraryUrl: 'https://console.pilotwme.com/dashboard/artifacts',
   },
 }
 
@@ -188,7 +191,7 @@ export const voicePage = {
   eyebrow: 'VOICE DEMO',
   title: 'Same knowledge, different voice',
   description:
-    'The editorial constitution is a set of parameters that shape every projection Pilot produces. Adjust the sliders to see how the same underlying knowledge reads differently at different voice settings. In V2, this calls the live API.',
+    'The editorial constitution is a set of parameters that shape every projection Pilot produces. Adjust the sliders to see how the same underlying knowledge reads differently at different voice settings.',
   manifoldRegion: 'Editorial AI',
   sourceCount: 21,
 }
@@ -201,7 +204,7 @@ export const researchDeskPage = {
   eyebrow: 'RESEARCH DESK',
   title: 'Ask Pilot anything',
   description:
-    'The research desk is a direct interface to the manifold. Ask a question in plain language and Pilot projects an answer, with citations. In V1, this demonstrates the interaction pattern with a pre-written response.',
+    'The research desk is a direct interface to Pilot\'s knowledge manifold. Ask a question in plain language and Pilot projects an answer from the real knowledge base — with full provenance, citing every source it drew from.',
   placeholder: 'What would you like to know about Pilot?',
 }
 
@@ -212,11 +215,4 @@ export const researchSuggestions = [
   'How does the editorial constitution work?',
 ]
 
-export const researchAnswer =
-  "Pilot uses a Bring Your Own Key model for AI inference. You connect your own API keys — OpenAI, Anthropic, or any compatible provider — and Pilot routes projection requests through your account. This means your content never touches Pilot's servers during inference. Your knowledge stays in your infrastructure: the manifold lives in your Qdrant instance, the knowledge graph in Neo4j, the source files in S3. Pilot is an orchestration layer, not a data host. You own the knowledge. You own the keys. Pilot owns the intelligence that connects them."
-
-export const researchSources: Source[] = [
-  { title: 'Latent Vector — Chapter 3: Knowledge Architectures', id: 'artifact_lv_003' },
-  { title: 'About 5 Years Publish 6 — The BYOK Principle',       id: 'artifact_p6_017' },
-  { title: 'Pilot API Reference — Authentication & BYOK',         id: 'artifact_api_auth' },
-]
+// researchAnswer and researchSources removed in V2 — Research Desk now streams live from the API

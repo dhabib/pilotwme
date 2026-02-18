@@ -22,6 +22,7 @@ export interface VoiceSlider {
 export interface CitationArtifact {
   title: string
   source: string
+  artifactId?: string  // links to console.pilotwme.com/dashboard/artifacts?select=ID
 }
 
 export interface Source {

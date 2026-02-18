@@ -1,20 +1,25 @@
 'use client'
 
 import Image from 'next/image'
-import { useStreamText } from '@/hooks/use-stream-text'
-import { Source } from '@/lib/types'
+import { AskSource } from '@/hooks/use-ask-stream'
 
 interface DeskResponseProps {
   answer: string
   streaming: boolean
-  sources: Source[]
+  sources: AskSource[]
+  error?: string | null
 }
 
-export function DeskResponse({ answer, streaming, sources }: DeskResponseProps) {
-  const { displayed, done } = useStreamText(answer, 12, streaming)
+const CONSOLE_URL = 'https://console.pilotwme.com'
 
-  const shownText = streaming ? displayed : answer
-  const showSources = streaming ? done : true
+export function DeskResponse({ answer, streaming, sources, error }: DeskResponseProps) {
+  if (error) {
+    return (
+      <div className="p-4" role="alert">
+        <p className="text-red-500 text-sm">{error}</p>
+      </div>
+    )
+  }
 
   return (
     <div className="p-4" role="log" aria-live="polite" aria-label="Pilot response">
@@ -32,9 +37,9 @@ export function DeskResponse({ answer, streaming, sources }: DeskResponseProps) 
 
         {/* Response */}
         <div className="flex-1 min-w-0">
-          <p className="text-slate text-base leading-relaxed">
-            {shownText}
-            {streaming && !done && (
+          <p className="text-slate text-base leading-relaxed whitespace-pre-wrap">
+            {answer}
+            {streaming && (
               <span className="inline-block w-[2px] h-[1em] bg-blue ml-0.5 animate-pulse align-middle">
                 ▍
               </span>
@@ -42,19 +47,24 @@ export function DeskResponse({ answer, streaming, sources }: DeskResponseProps) 
           </p>
 
           {/* Sources */}
-          {showSources && sources.length > 0 && (
+          {!streaming && sources.length > 0 && (
             <div className="mt-4 pt-4 border-t border-[#E2E8F0]">
               <p className="text-slate-light text-xs font-medium mb-2">Sources</p>
               <ul className="flex flex-col gap-1.5">
                 {sources.map((src) => (
-                  <li key={src.id} className="flex items-center justify-between gap-2">
+                  <li key={src.artifactId} className="flex items-center justify-between gap-2">
                     <span className="text-slate text-xs flex items-center gap-1.5">
                       <span className="text-blue">⬦</span>
-                      {src.title}
+                      {src.fileName}
                     </span>
-                    <span className="text-slate-light text-[11px] font-mono flex-shrink-0">
-                      {src.id}
-                    </span>
+                    <a
+                      href={`${CONSOLE_URL}/dashboard/artifacts?select=${src.artifactId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue text-[11px] font-medium hover:underline flex-shrink-0"
+                    >
+                      View →
+                    </a>
                   </li>
                 ))}
               </ul>
