@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Eyebrow } from '@/components/eyebrow'
 import { DeskBox } from '@/components/desk-box'
 import { DeskInput } from '@/components/desk-input'
@@ -10,9 +11,20 @@ import { useAskStream } from '@/hooks/use-ask-stream'
 import { researchDeskPage, researchSuggestions } from '@/lib/data'
 
 export default function ResearchDeskPage() {
+  const searchParams = useSearchParams()
   const [query, setQuery] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const { answer, sources, streaming, error, submit, reset } = useAskStream()
+
+  // Pre-fill question from ?q= query parameter
+  useEffect(() => {
+    const q = searchParams.get('q')
+    if (q && q.trim()) {
+      setQuery(q.trim())
+      setSubmitted(true)
+      submit(q.trim())
+    }
+  }, [searchParams, submit])
 
   const handleSubmit = (q: string) => {
     setQuery(q)

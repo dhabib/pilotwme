@@ -10,8 +10,6 @@ interface DeskResponseProps {
   error?: string | null
 }
 
-const CONSOLE_URL = 'https://console.pilotwme.com'
-
 export function DeskResponse({ answer, streaming, sources, error }: DeskResponseProps) {
   if (error) {
     return (
@@ -57,14 +55,9 @@ export function DeskResponse({ answer, streaming, sources, error }: DeskResponse
                       <span className="text-blue">⬦</span>
                       {src.fileName}
                     </span>
-                    <a
-                      href={`${CONSOLE_URL}/dashboard/artifacts?select=${src.artifactId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue text-[11px] font-medium hover:underline flex-shrink-0"
-                    >
-                      View →
-                    </a>
+                    <span className="text-blue text-[11px] font-medium flex-shrink-0">
+                      Available in Library
+                    </span>
                   </li>
                 ))}
               </ul>
