@@ -3,6 +3,7 @@ import { Eyebrow } from '@/components/eyebrow'
 import { Button } from '@/components/button'
 import { Card } from '@/components/card'
 import { Cite } from '@/components/cite'
+import { LatestHooksSection } from '@/components/latest-hooks-section'
 import { homeHero, homeCards, homeTransparency } from '@/lib/data'
 
 export const metadata = {
@@ -47,6 +48,11 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Latest hooks section                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <LatestHooksSection />
 
       {/* ------------------------------------------------------------------ */}
       {/* Transparency notice (dark section)                                  */}
