@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Font display swap for performance */
+  @font-face {
+    font-display: swap;
+  }
+}
+
+@layer utilities {
+  /* Border lines flanking the max-width container on desktop */
+  .site-border {
+    @apply relative;
+  }
+
+  .site-border::before,
+  .site-border::after {
+    content: '';
+    @apply absolute top-0 bottom-0 border-l border-[#E2E8F0];
+    pointer-events: none;
+  }
+
+  .site-border::before {
+    left: calc((100% - 960px) / 2);
+  }
+
+  .site-border::after {
+    right: calc((100% - 960px) / 2);
+  }
+
+  /* Only show vertical border lines on wide screens */
+  @media (max-width: 1024px) {
+    .site-border::before,
+    .site-border::after {
+      display: none;
+    }
+  }
+}
