@@ -21,46 +21,27 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   const mainContent = cleanContent.slice(0, splitPoint).trim()
   const exploratoryContent = cleanContent.slice(splitPoint).trim()
 
-  // Use IntersectionObserver on the exploratory section itself
-  // When it enters viewport, activate streaming
+  // Simple scroll detection: check if exploratory section is in viewport
   useEffect(() => {
-    const section = exploratoryRef.current
-    if (!section) {
-      console.log('No exploratory ref found')
-      return
-    }
+    const checkScroll = () => {
+      const section = exploratoryRef.current
+      if (!section || exploratoryActive) return
 
-    console.log('Setting up IntersectionObserver for exploratory section')
+      const rect = section.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          console.log('Intersection event:', {
-            isIntersecting: entry.isIntersecting,
-            intersectionRatio: entry.intersectionRatio,
-            boundingClientRect: entry.boundingClientRect,
-            exploratoryActive,
-          })
-
-          if (entry.isIntersecting && !exploratoryActive) {
-            console.log('✅ Activating exploratory streaming NOW')
-            setExploratoryActive(true)
-          }
-        })
-      },
-      {
-        // Trigger when top of section is 80% down the viewport
-        threshold: 0,
-        rootMargin: '0px 0px -20% 0px',
+      // Activate when top of section is 70% down the viewport
+      if (rect.top < viewportHeight * 0.7) {
+        console.log('✅ Exploratory section visible - activating streaming')
+        setExploratoryActive(true)
       }
-    )
-
-    observer.observe(section)
-
-    return () => {
-      console.log('Cleaning up IntersectionObserver')
-      observer.disconnect()
     }
+
+    // Check on scroll and on mount
+    checkScroll()
+    window.addEventListener('scroll', checkScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', checkScroll)
   }, [exploratoryActive])
 
   const formattedDate = new Date(generatedAt).toLocaleDateString('en-US', {
@@ -111,7 +92,7 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
             )}
           </>
         ) : (
-          <div className="text-slate-light text-sm text-center py-12">
+          <div className="py-12">
             {/* Placeholder to maintain layout */}
           </div>
         )}
