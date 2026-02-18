@@ -14,8 +14,7 @@ interface WisdomEngineContentProps {
 
 export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomEngineContentProps) {
   const [exploratoryActive, setExploratoryActive] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const hookRef = useRef<HTMLElement>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
 
   // Remove markdown title if present, split content into main (60%) and exploratory (40%)
   const cleanContent = hookContent.replace(/^#\s+.*?\n\n/, '').trim()
@@ -23,41 +22,32 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   const mainContent = cleanContent.slice(0, splitPoint).trim()
   const exploratoryContent = cleanContent.slice(splitPoint).trim()
 
-  // Track scroll position for the hint bar
+  // Use IntersectionObserver to detect when user scrolls to trigger point
   useEffect(() => {
-    const handleScroll = () => {
-      const el = hookRef.current
-      if (!el) return
+    const trigger = triggerRef.current
+    if (!trigger) return
 
-      const rect = el.getBoundingClientRect()
-      const viewportHeight = window.innerHeight
-
-      // Calculate how much of the article has been scrolled through
-      // When rect.top is 0, article top is at viewport top
-      // When rect.top is negative, article has scrolled up past viewport
-      const scrolledPastTop = Math.max(0, -rect.top)
-      const articleHeight = el.offsetHeight
-
-      // Progress: how much of the article has scrolled past viewport top
-      const progress = Math.min(1, scrolledPastTop / (articleHeight * 0.55))
-      setScrollProgress(Math.max(0, progress))
-
-      // Trigger exploratory when we've scrolled through 55% of the article
-      // OR when the bottom of the article is approaching the middle of the viewport
-      const bottomOfArticle = rect.bottom
-      const triggerPoint = viewportHeight * 0.6
-
-      if (!exploratoryActive && (progress >= 1 || bottomOfArticle < triggerPoint)) {
-        console.log('Triggering exploratory section', { progress, bottomOfArticle, triggerPoint })
-        setExploratoryActive(true)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !exploratoryActive) {
+            console.log('Trigger element visible - activating exploratory section')
+            setExploratoryActive(true)
+          }
+        })
+      },
+      {
+        // Trigger when element is 50% visible
+        threshold: 0.5,
+        rootMargin: '0px 0px -20% 0px', // Trigger a bit before reaching bottom
       }
+    )
+
+    observer.observe(trigger)
+
+    return () => {
+      observer.disconnect()
     }
-
-    // Run once on mount to check initial position
-    handleScroll()
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [exploratoryActive])
 
   const formattedDate = new Date(generatedAt).toLocaleDateString('en-US', {
@@ -69,7 +59,7 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
   return (
     <>
       {/* Hook zone */}
-      <article ref={hookRef} className="border-b border-[#E2E8F0] py-12 max-w-2xl">
+      <article className="border-b border-[#E2E8F0] py-12 max-w-2xl">
         <Eyebrow text="HOOK CONTENT · CACHED · STABLE URL" className="mb-4" />
         <h1 className="font-serif text-[38px] md:text-[48px] leading-tight text-ink mb-8">
           {title}
@@ -81,7 +71,17 @@ export function WisdomEngineContent({ title, hookContent, generatedAt }: WisdomE
           </p>
         ))}
 
-        <ScrollHint progress={scrollProgress} visible={!exploratoryActive} />
+        {/* Trigger point for exploratory section */}
+        {!exploratoryActive && (
+          <div ref={triggerRef} className="flex flex-col items-center gap-3 py-8">
+            <p className="text-slate-light text-sm animate-pulse">
+              ↓ Keep scrolling to see exploratory content ↓
+            </p>
+            <div className="w-[200px] h-[3px] bg-[#E2E8F0] rounded-full">
+              <div className="h-full w-0 bg-blue rounded-full animate-pulse" />
+            </div>
+          </div>
+        )}
       </article>
 
       {/* Exploratory zone */}

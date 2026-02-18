@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ManifoldRegion } from '@/lib/types'
 import { Eyebrow } from './eyebrow'
 import { Button } from './button'
@@ -14,6 +15,9 @@ export function ManifoldDetail({ region }: ManifoldDetailProps) {
       </div>
     )
   }
+
+  // Pre-fill question for research desk based on region
+  const question = `Tell me about ${region.label.toLowerCase()} in the context of Pilot`
 
   return (
     <div className="flex-1 min-w-0">
@@ -33,13 +37,14 @@ export function ManifoldDetail({ region }: ManifoldDetailProps) {
 
       <div className="bg-blue-light border-l-4 border-blue rounded-r-lg p-3 mb-4 text-sm text-slate leading-relaxed">
         <strong className="text-blue font-semibold">Tip:</strong> Click &apos;Generate
-        projection&apos; to see Pilot compose a fresh excerpt from this manifold region, shaped by
-        the active editorial constitution.
+        projection&apos; to ask Pilot about this manifold region.
       </div>
 
-      <Button variant="primary" className="w-full justify-center" onClick={() => {}}>
-        Generate projection →
-      </Button>
+      <Link href={`/research-desk?q=${encodeURIComponent(question)}`}>
+        <Button variant="primary" className="w-full justify-center">
+          Generate projection →
+        </Button>
+      </Link>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Eyebrow } from '@/components/eyebrow'
 import { DeskBox } from '@/components/desk-box'
@@ -10,7 +10,7 @@ import { SuggestionPills } from '@/components/suggestion-pills'
 import { useAskStream } from '@/hooks/use-ask-stream'
 import { researchDeskPage, researchSuggestions } from '@/lib/data'
 
-export default function ResearchDeskPage() {
+function ResearchDeskContent() {
   const searchParams = useSearchParams()
   const [query, setQuery] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -83,5 +83,21 @@ export default function ResearchDeskPage() {
         )}
       </div>
     </section>
+  )
+}
+
+export default function ResearchDeskPage() {
+  return (
+    <Suspense
+      fallback={
+        <section className="py-12">
+          <div className="max-w-2xl">
+            <div className="text-slate-light text-center">Loading...</div>
+          </div>
+        </section>
+      }
+    >
+      <ResearchDeskContent />
+    </Suspense>
   )
 }
