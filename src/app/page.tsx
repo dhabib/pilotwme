@@ -38,7 +38,7 @@ export default function HomePage() {
             href="https://peek.pilotwme.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 bg-white border border-[#E2E8F0] text-ink hover:border-blue hover:text-blue"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100 hover:border-amber-300"
           >
             Peek behind the curtain
           </a>
