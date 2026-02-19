@@ -16,7 +16,7 @@ export async function LatestHooksSection() {
   try {
     const res = await fetch(
       `${PILOT_API_URL}/api/v1/public/hooks?tenantId=${PILOT_TENANT_ID}&limit=3`,
-      { next: { revalidate: 3600 } }
+      { cache: 'no-store' }
     )
 
     if (res.ok) {

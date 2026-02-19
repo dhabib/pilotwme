@@ -10,7 +10,7 @@ export async function LatestArticlesSection() {
   try {
     const res = await fetch(
       `${PILOT_API_URL}/api/v1/public/articles?tenantId=${PILOT_TENANT_ID}&limit=1`,
-      { next: { revalidate: 3600 } }
+      { cache: 'no-store' }
     )
 
     if (res.ok) {
