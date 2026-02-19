@@ -14,7 +14,8 @@ export async function LatestArticlesSection() {
     )
 
     if (res.ok) {
-      articles = await res.json()
+      const data = await res.json()
+      articles = data.articles || []
     } else {
       console.error('[LatestArticlesSection] Failed to fetch articles:', res.status)
     }
