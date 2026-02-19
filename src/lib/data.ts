@@ -17,7 +17,7 @@ export const homeHero = {
   headline: 'Your CMS manages articles.',
   headlineEm: 'Pilot cultivates wisdom.',
   subhead:
-    'Pilot doesn\'t just store files for retrieval. It memorizes what you know, and _projects_ structured knowledge on demand - as articles, briefings, newsletters, social posts... Your full treasury of source material, now truly within reach.',
+    'Pilot doesn\'t just store files for retrieval. It memorizes what you know, and <em>projects</em> structured knowledge on demand - as articles, briefings, newsletters, social posts... Your full treasury of source material, now truly within reach.',
 }
 
 export const homeCards = [
@@ -31,7 +31,7 @@ export const homeCards = [
     tag: 'EXPLORATORY',
     title: 'Scroll deeper and the page opens up',
     description:
-      'Of course you still have articles. But below the fold, _exploratory_ zones emerge. Pilot reads your context and generates fresh projections from the manifold — shaped by your Editorial Voice. No two readers get exactly the same page.',
+      'Of course you still have articles. But below the fold, <em>exploratory</em> zones emerge. Pilot reads your context and generates fresh projections from the manifold — shaped by your Editorial Voice. No two readers get exactly the same page.',
   },
   {
     tag: 'RESEARCH DESK',
@@ -44,7 +44,7 @@ export const homeCards = [
 export const homeTransparency = {
   heading: 'This site runs on Pilot.',
   body: [
-    'The dynamic content on this site is projected by Pilot from its stash of wisdom that we call its _manifold_. This site learned from only a few artifacts: two books (David Habib\'s _Latent Vector_ and _About Five Years_), a few of the product documents that we wrote as we were designing Pilot, and a growing number of items that were projected from the manifold, reviewed, approved, and placed in the library as further sources of wisdom.',
+    'The dynamic content on this site is projected by Pilot from its stash of wisdom that we call its <em>manifold</em>. This site learned from only a few artifacts: two books (David Habib\'s <em>Latent Vector</em> and <em>About Five Years</em>), a few of the product documents that we wrote as we were designing Pilot, and a growing number of items that were projected from the manifold, reviewed, approved, and placed in the library as further sources of wisdom.',
     'This transparency is not a legal disclaimer. It is the product demonstrating its own principle: that the origin of every claim should be traceable, that editorial voice should be paramount, and that knowledge should compound rather than depreciate.',
   ],
 }

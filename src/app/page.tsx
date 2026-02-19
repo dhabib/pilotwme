@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Eyebrow } from '@/components/eyebrow'
 import { Button } from '@/components/button'
 import { Card } from '@/components/card'
+import SafeHTML from '@/components/safe-html'
 import { homeHero, homeCards, homeTransparency } from '@/lib/data'
 
 export const metadata = {
@@ -23,9 +24,7 @@ export default function HomePage() {
           <br />
           <em>{homeHero.headlineEm}</em>
         </h1>
-        <p className="text-slate text-lg leading-relaxed max-w-xl mb-8">
-          {homeHero.subhead}
-        </p>
+        <SafeHTML html={homeHero.subhead} className="text-slate text-lg leading-relaxed max-w-xl mb-8" tag="p" />
         <div className="flex flex-wrap gap-3">
           <Link href="/wisdom-engine">
             <Button variant="primary">See it in action →</Button>
@@ -64,9 +63,7 @@ export default function HomePage() {
             {homeTransparency.heading}
           </h2>
           {homeTransparency.body.map((para, i) => (
-            <p key={i} className="text-slate-light leading-relaxed mb-4 text-base">
-              {para}
-            </p>
+            <SafeHTML key={i} html={para} className="text-slate-light leading-relaxed mb-4 text-base" tag="p" />
           ))}
         </div>
       </section>
