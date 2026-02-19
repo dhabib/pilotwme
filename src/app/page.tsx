@@ -2,13 +2,12 @@ import Link from 'next/link'
 import { Eyebrow } from '@/components/eyebrow'
 import { Button } from '@/components/button'
 import { Card } from '@/components/card'
-import { Cite } from '@/components/cite'
 import { homeHero, homeCards, homeTransparency } from '@/lib/data'
 
 export const metadata = {
   title: 'Pilot — The World\'s First Wisdom Engine',
   description:
-    'Pilot ingests what you know, shapes it through editorial intelligence, and projects structured knowledge on demand.',
+    'Pilot doesn\'t just store files for retrieval. It memorizes what you know, and projects structured knowledge on demand - as articles, briefings, newsletters, social posts... Your full treasury of source material, now truly within reach.',
 }
 
 export default function HomePage() {
@@ -69,11 +68,6 @@ export default function HomePage() {
               {para}
             </p>
           ))}
-          <p className="text-slate-light leading-relaxed mb-4 text-base italic">
-            <Cite artifact={homeTransparency.citedBook.artifact}>
-              {homeTransparency.citedBook.quote}
-            </Cite>
-          </p>
         </div>
       </section>
 

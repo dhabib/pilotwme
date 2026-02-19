@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: '%s | Pilot',
   },
   description:
-    'Pilot ingests what you know, shapes it through editorial intelligence, and projects structured knowledge on demand — as articles, briefings, or answers.',
+    'Pilot doesn\'t just store files for retrieval. It memorizes what you know, and projects structured knowledge on demand - as articles, briefings, newsletters, social posts... Your full treasury of source material, now truly within reach.',
   metadataBase: new URL('https://pilotcms.com'),
   openGraph: {
     type: 'website',

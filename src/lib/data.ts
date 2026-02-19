@@ -17,7 +17,7 @@ export const homeHero = {
   headline: 'Your CMS manages articles.',
   headlineEm: 'Pilot cultivates wisdom.',
   subhead:
-    'Pilot ingests what you know, shapes it through editorial intelligence, and projects structured knowledge on demand — as articles, briefings, or answers. The same source material, endlessly recombined, never stale.',
+    'Pilot doesn\'t just store files for retrieval. It memorizes what you know, and _projects_ structured knowledge on demand - as articles, briefings, newsletters, social posts... Your full treasury of source material, now truly within reach.',
 }
 
 export const homeCards = [
@@ -25,13 +25,13 @@ export const homeCards = [
     tag: 'HOOK CONTENT',
     title: 'This site is generated, not written',
     description:
-      'Every article on this site was projected from Pilot\'s manifold — not typed, scheduled, or stuffed into a template. Hook content is cached, deterministic, and serves a stable URL. You can link to it. Google can index it. It does not change until the knowledge does.',
+      'The content on this site is a fusion of static, SEO- and AEO- friendly artifacts, called "Hooks," and supplementary content from the Manifold - curated content. Not AI slop - simply a resurfacing of wisdom, in context.',
   },
   {
     tag: 'EXPLORATORY',
     title: 'Scroll deeper and the page opens up',
     description:
-      'Below the fold, exploratory zones emerge. Pilot reads your engagement and generates fresh projections from the manifold — shaped by your editorial constitution. No two readers get exactly the same page.',
+      'Of course you still have articles. But below the fold, _exploratory_ zones emerge. Pilot reads your context and generates fresh projections from the manifold — shaped by your Editorial Voice. No two readers get exactly the same page.',
   },
   {
     tag: 'RESEARCH DESK',
@@ -44,17 +44,9 @@ export const homeCards = [
 export const homeTransparency = {
   heading: 'This site runs on Pilot.',
   body: [
-    'Much of the content here was projected by Pilot, informed by two source books (David Habib\'s Latent Vector and About Five Years) and a few of the requirements documents that described our goals for Pilot WME. Pilot ingested them, built a manifold, and has been projecting content ever since. With clear provenance — lineage from each piece of content back to its source in the manifold.',
+    'The dynamic content on this site is projected by Pilot from its stash of wisdom that we call its _manifold_. This site learned from only a few artifacts: two books (David Habib\'s _Latent Vector_ and _About Five Years_), a few of the product documents that we wrote as we were designing Pilot, and a growing number of items that were projected from the manifold, reviewed, approved, and placed in the library as further sources of wisdom.',
     'This transparency is not a legal disclaimer. It is the product demonstrating its own principle: that the origin of every claim should be traceable, that editorial voice should be paramount, and that knowledge should compound rather than depreciate.',
   ],
-  citedBook: {
-    artifact: {
-      title: 'Latent Vector — Foreword',
-      source: 'David Habib, Latent Vector (2025), p. i',
-      artifactId: '01185742-ad31-4a2c-b0c7-49cdf0126562',
-    } as CitationArtifact,
-    quote: 'AI systems can understand information without requiring predetermined categories',
-  },
 }
 
 // -----------------------------------------------------------------------------
