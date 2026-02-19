@@ -5,7 +5,7 @@
  * Handles connection lifecycle, tool calling, and streaming.
  */
 
-const API_URL = process.env.NEXT_PUBLIC_PILOT_API_URL || 'https://api.pilotwme.com'
+const API_URL = (process.env.NEXT_PUBLIC_PILOT_API_URL || 'https://api.pilotwme.com').trim()
 
 export interface MCPStreamChunk {
   type: 'provenance' | 'text' | 'component' | 'done' | 'error'
