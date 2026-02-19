@@ -1,4 +1,5 @@
 import { Eyebrow } from '@/components/eyebrow'
+import { LatestArticlesSection } from '@/components/latest-articles-section'
 import { LatestHooksSection } from '@/components/latest-hooks-section'
 
 export const metadata = {
@@ -18,7 +19,10 @@ export default function LatestPage() {
           The latest projections from Pilot&apos;s knowledge manifold, generated on demand and always current.
         </p>
       </div>
-      <LatestHooksSection />
+      <div className="flex flex-col gap-4">
+        <LatestArticlesSection />
+        <LatestHooksSection />
+      </div>
     </section>
   )
 }

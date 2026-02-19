@@ -32,13 +32,9 @@ export function LatestHookCard({ hook }: LatestHookCardProps) {
   // Preview: first 200 chars
   const preview = cleanContent.slice(0, 200) + (cleanContent.length > 200 ? '...' : '')
 
-  // Format date: "6 days ago" or formatted date
+  // Format date: always show a formatted date (not relative) since hooks regenerate
   const date = new Date(hook.generatedAt)
-  const daysAgo = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24))
-  const dateString = daysAgo === 0 ? 'Today' :
-                     daysAgo === 1 ? 'Yesterday' :
-                     daysAgo < 7 ? `${daysAgo} days ago` :
-                     date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+  const dateString = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
 
   // Generate contextual exploratory question based on title
   const exploratoryQuestion = `Tell me more about ${title.toLowerCase()}`
