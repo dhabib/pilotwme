@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Eyebrow } from './eyebrow'
-import { useAskStream } from '@/hooks/use-ask-stream'
+import { useRouter } from 'next/navigation'
 
 interface Hook {
   id: string
@@ -16,9 +15,8 @@ interface LatestHookCardProps {
 }
 
 export function LatestHookCard({ hook }: LatestHookCardProps) {
+  const router = useRouter()
   const [expanded, setExpanded] = useState(false)
-  const [exploratoryActive, setExploratoryActive] = useState(false)
-  const { answer, sources, streaming, error, submit } = useAskStream()
 
   // Clean markdown (reuse pattern from wisdom-engine-content.tsx)
   let cleanContent = hook.content.replace(/^#\s+.*?\n\n/, '').trim()
@@ -83,53 +81,15 @@ export function LatestHookCard({ hook }: LatestHookCardProps) {
             ))}
           </div>
 
-          {/* Exploratory button */}
-          {!exploratoryActive && (
-            <button
-              onClick={() => {
-                setExploratoryActive(true)
-                submit(exploratoryQuestion)
-              }}
-              className="w-full px-4 py-2.5 bg-blue text-white text-sm font-medium rounded-lg hover:bg-blue-dark transition-colors"
-            >
-              Get more from the Wisdom Engine →
-            </button>
-          )}
-
-          {/* Exploratory section (streaming answer) */}
-          {exploratoryActive && (
-            <div className="mt-6 pt-6 border-t border-[#E2E8F0]">
-              <Eyebrow text="EXPLORATORY · STREAMING FROM MANIFOLD" color="accent" className="mb-3" />
-
-              <div className="text-slate text-sm leading-relaxed mb-4">
-                {answer}
-                {streaming && (
-                  <span className="inline-block w-[2px] h-[1em] bg-blue ml-0.5 animate-pulse align-middle">
-                    ▍
-                  </span>
-                )}
-              </div>
-
-              {error && (
-                <div className="text-red-500 text-xs">{error}</div>
-              )}
-
-              {!streaming && sources.length > 0 && (
-                <div className="pt-3 border-t border-[#E2E8F0]">
-                  <p className="text-slate-light text-xs font-medium mb-2">Sources</p>
-                  <ul className="flex flex-col gap-1.5">
-                    {sources.map((src) => (
-                      <li key={src.artifactId} className="flex items-center gap-2">
-                        <span className="text-blue text-xs">⬦</span>
-                        <span className="text-slate text-xs">{src.fileName}</span>
-                        <span className="text-blue text-[10px] font-medium">Available in Library</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Ask Pilot CTA — links to Research Desk with context */}
+          <button
+            onClick={() =>
+              router.push(`/research-desk?q=${encodeURIComponent(exploratoryQuestion)}`)
+            }
+            className="w-full px-4 py-2.5 bg-blue text-white text-sm font-medium rounded-lg hover:bg-blue-dark transition-colors"
+          >
+            Ask Pilot about this →
+          </button>
         </>
       )}
     </div>

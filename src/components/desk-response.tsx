@@ -1,7 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { AskSource } from '@/hooks/use-ask-stream'
+
+interface AskSource {
+  fileName: string
+  artifactId: string
+  score: number
+}
 
 interface DeskResponseProps {
   answer: string
