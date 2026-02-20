@@ -24,6 +24,7 @@ interface HookDetail {
   body_html: string
   source_artifacts: SourceArtifact[]
   voice_snapshot: { brevity: number; formality: number; confidence: number } | null
+  follow_on_prompt?: string | null
   generatedAt: string
 }
 
@@ -191,18 +192,25 @@ export default async function IdeaPage({ params }: { params: { slug: string } })
         )}
 
         {/* Ask CTA */}
-        <div className="mt-12 bg-blue-light rounded-xl p-6">
-          <p className="text-blue font-semibold text-base mb-2">Want to go deeper?</p>
-          <p className="text-slate text-sm mb-4">
-            Ask Pilot a follow-up question and it will project an answer from the same knowledge base.
-          </p>
-          <Link
-            href={`/ask?q=${encodeURIComponent('Tell me more about ' + hook.title)}`}
-            className="inline-flex items-center px-4 py-2 bg-blue text-white rounded-lg text-sm font-medium hover:bg-blue-dark transition-colors"
-          >
-            Ask Pilot →
-          </Link>
-        </div>
+        {(() => {
+          const followOnQ = hook.follow_on_prompt?.trim() || `Tell me more about ${hook.title}`
+          return (
+            <div className="mt-12 bg-blue-light rounded-xl p-6">
+              <p className="text-blue font-semibold text-base mb-2">Want to go deeper?</p>
+              <p className="text-slate text-sm mb-4">
+                {hook.follow_on_prompt?.trim()
+                  ? hook.follow_on_prompt.trim()
+                  : 'Ask Pilot a follow-up question and it will project an answer from the same knowledge base.'}
+              </p>
+              <Link
+                href={`/ask?q=${encodeURIComponent(followOnQ)}`}
+                className="inline-flex items-center px-4 py-2 bg-blue text-white rounded-lg text-sm font-medium hover:bg-blue-dark transition-colors"
+              >
+                Ask Pilot →
+              </Link>
+            </div>
+          )
+        })()}
 
         {/* Related hooks */}
         <RelatedHooks hooks={related} />
