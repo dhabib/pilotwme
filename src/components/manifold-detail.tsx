@@ -40,7 +40,7 @@ export function ManifoldDetail({ region }: ManifoldDetailProps) {
         projection&apos; to ask Pilot about this manifold region.
       </div>
 
-      <Link href={`/research-desk?q=${encodeURIComponent(question)}`}>
+      <Link href={`/ask?q=${encodeURIComponent(question)}`}>
         <Button variant="primary" className="w-full justify-center">
           Generate projection →
         </Button>

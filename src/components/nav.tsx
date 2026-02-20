@@ -6,12 +6,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const links = [
-  { label: 'Home',          href: '/' },
-  { label: 'Latest',        href: '/latest' },
-  { label: 'Wisdom Engine', href: '/wisdom-engine' },
-  { label: 'Manifold',      href: '/manifold' },
-  { label: 'Voice',         href: '/voice' },
-  { label: 'Research Desk', href: '/research-desk' },
+  { label: 'Home',         href: '/' },
+  { label: 'Ideas',        href: '/ideas' },
+  { label: 'About',        href: '/about' },
+  { label: 'Ask',          href: '/ask' },
+  { label: 'How It Works', href: '/how-it-works' },
 ]
 
 export function Nav() {
@@ -71,6 +70,18 @@ export function Nav() {
                 </li>
               )
             })}
+            {/* Divider + Peek link */}
+            <li role="separator" className="w-px h-4 bg-[#E2E8F0] mx-1" aria-hidden />
+            <li>
+              <a
+                href="https://peek.pilotwme.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
+              >
+                Peek ↗
+              </a>
+            </li>
           </ul>
 
           {/* Mobile hamburger */}
@@ -119,6 +130,17 @@ export function Nav() {
                   </li>
                 )
               })}
+              <li>
+                <a
+                  href="https://peek.pilotwme.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
+                >
+                  Peek ↗
+                </a>
+              </li>
             </ul>
           </div>
         )}

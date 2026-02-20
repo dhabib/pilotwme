@@ -26,20 +26,12 @@ export default function HomePage() {
         </h1>
         <SafeHTML html={homeHero.subhead} className="text-slate text-lg leading-relaxed max-w-xl mb-8" tag="p" />
         <div className="flex flex-wrap gap-3">
-          <Link href="/wisdom-engine">
-            <Button variant="primary">See it in action →</Button>
+          <Link href="/ideas">
+            <Button variant="primary">Read what Pilot can do →</Button>
           </Link>
-          <Link href="/research-desk">
+          <Link href="/ask">
             <Button variant="outline">Ask Pilot anything</Button>
           </Link>
-          <a
-            href="https://peek.pilotwme.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100 hover:border-amber-300"
-          >
-            Peek behind the curtain
-          </a>
         </div>
       </section>
 
@@ -74,7 +66,7 @@ export default function HomePage() {
       <section className="py-10 text-center">
         <p className="text-slate-light text-sm">
           Built with Pilot ·{' '}
-          <Link href="/research-desk" className="text-blue hover:underline">
+          <Link href="/ask" className="text-blue hover:underline">
             Ask us anything
           </Link>
         </p>

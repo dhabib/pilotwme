@@ -8,6 +8,17 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
 
+  // 301 redirects for route renames
+  async redirects() {
+    return [
+      { source: '/latest',         destination: '/ideas',                  permanent: true },
+      { source: '/wisdom-engine',  destination: '/about',                  permanent: true },
+      { source: '/manifold',       destination: '/how-it-works#manifold',  permanent: true },
+      { source: '/voice',          destination: '/how-it-works#voice',     permanent: true },
+      { source: '/research-desk',  destination: '/ask',                    permanent: true },
+    ]
+  },
+
   // Headers for performance
   async headers() {
     return [
