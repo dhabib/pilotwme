@@ -2,6 +2,7 @@
 
 import { Suspense, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import { Eyebrow } from '@/components/eyebrow'
 import { DeskBox } from '@/components/desk-box'
 import { DeskInput } from '@/components/desk-input'
@@ -222,7 +223,10 @@ function AskContent() {
 
               const assistantMsg = msg as AssistantMessage
               return (
-                <div key={i} className="flex justify-start">
+                <div key={i} className="flex gap-3 justify-start">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full overflow-hidden border border-[#E2E8F0] bg-white mt-1">
+                    <Image src="/pilot-logo.png" alt="Pilot" width={32} height={32} className="w-full h-full object-cover" />
+                  </div>
                   <div className="flex-1">
                     <DeskBox>
                       <div className="p-4">

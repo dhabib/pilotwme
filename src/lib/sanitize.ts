@@ -3,7 +3,12 @@
 /**
  * Content sanitizer — DOMPurify wrapper for AI-generated text.
  * Prevents XSS from streamed content.
+ * Converts markdown to HTML before sanitizing.
  */
+
+import MarkdownIt from 'markdown-it'
+
+const md = new MarkdownIt({ html: false, breaks: false, linkify: false })
 
 let DOMPurify: any = null
 
@@ -20,8 +25,11 @@ export async function sanitizeHTML(dirty: string): Promise<string> {
     return dirty.replace(/<[^>]*>/g, '')
   }
 
+  // If content doesn't start with an HTML tag, treat as markdown
+  const source = dirty.trimStart().startsWith('<') ? dirty : md.render(dirty)
+
   const purify = await getDOMPurify()
-  return purify.sanitize(dirty, {
+  return purify.sanitize(source, {
     ALLOWED_TAGS: [
       'b', 'i', 'em', 'strong', 'a', 'p', 'br',
       'ul', 'ol', 'li', 'code', 'pre', 'blockquote',
