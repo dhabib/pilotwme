@@ -8,6 +8,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Prevent TipTap empty paragraph spacers from collapsing */
+  .prose p:empty {
+    min-height: 1em;
+  }
+
   body {
     @apply bg-paper text-ink font-sans;
     -webkit-font-smoothing: antialiased;
