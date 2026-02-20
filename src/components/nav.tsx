@@ -29,22 +29,22 @@ export function Nav() {
 
       <header className="sticky top-0 z-40 w-full bg-paper/95 backdrop-blur-md border-b border-[#E2E8F0]">
         <nav
-          className="max-w-site mx-auto flex items-center justify-between h-14 px-4"
+          className="max-w-site mx-auto flex items-center justify-between h-[84px] px-4"
           aria-label="Main navigation"
         >
           {/* Logo + wordmark */}
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Pilot — Home">
-            <div className="w-8 h-8 rounded-md overflow-hidden bg-blue-light flex-shrink-0">
+          <Link href="/" className="flex items-center gap-3.5 group" aria-label="Pilot — Home">
+            <div className="w-12 h-12 flex-shrink-0">
               <Image
                 src="/pilot-logo.png"
                 alt=""
-                width={32}
-                height={32}
-                className="w-full h-full object-cover"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
                 priority
               />
             </div>
-            <span className="font-bold text-lg tracking-tight text-ink group-hover:text-blue transition-colors">
+            <span className="font-bold text-2xl tracking-tight text-ink group-hover:text-blue transition-colors">
               pilot
             </span>
           </Link>
@@ -58,7 +58,7 @@ export function Nav() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    className={`px-4 py-2 rounded-md text-lg font-medium transition-colors ${
                       active
                         ? 'bg-blue-light text-blue font-semibold'
                         : 'text-slate hover:text-ink hover:bg-blue-light/50'
@@ -77,7 +77,7 @@ export function Nav() {
                 href="https://peek.pilotwme.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
+                className="px-4 py-2 rounded-md text-sm font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
               >
                 Peek behind ↗
               </a>
@@ -118,7 +118,7 @@ export function Nav() {
                     <Link
                       href={href}
                       onClick={() => setMenuOpen(false)}
-                      className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      className={`block px-3 py-3 rounded-md text-sm font-medium transition-colors ${
                         active
                           ? 'bg-blue-light text-blue font-semibold'
                           : 'text-slate hover:text-ink hover:bg-blue-light/50'
@@ -136,7 +136,7 @@ export function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
+                  className="block px-3 py-3 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
                 >
                   Peek behind ↗
                 </a>

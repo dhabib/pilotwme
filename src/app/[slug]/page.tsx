@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import SafeHTML from '@/components/safe-html'
 
 export const revalidate = 3600
 
@@ -66,9 +65,9 @@ export default async function BoilerplatePage({ params }: { params: { slug: stri
         <h1 className="font-serif text-[36px] md:text-[44px] leading-tight text-ink mb-8">
           {page.title}
         </h1>
-        <SafeHTML
-          html={page.body_html}
+        <div
           className="prose prose-slate max-w-none text-slate leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: page.body_html }}
         />
         <p className="text-slate-light text-xs mt-12">
           Last updated: {new Date(page.updated_at).toLocaleDateString('en-US', {

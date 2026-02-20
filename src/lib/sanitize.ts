@@ -8,7 +8,7 @@
 
 import MarkdownIt from 'markdown-it'
 
-const md = new MarkdownIt({ html: false, breaks: false, linkify: false })
+const md = new MarkdownIt({ html: true, breaks: false, linkify: false })
 
 let DOMPurify: any = null
 
