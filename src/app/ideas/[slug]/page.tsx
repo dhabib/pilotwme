@@ -92,10 +92,10 @@ export async function generateMetadata({
 
   return {
     title: `${hook.title} — Pilot`,
-    description: hook.summary,
+    description: hook.summary ?? '',
     openGraph: {
       title: hook.title,
-      description: hook.summary,
+      description: hook.summary ?? '',
       type: 'article',
       url: canonical,
       publishedTime: hook.generatedAt,
@@ -111,6 +111,11 @@ export default async function IdeaPage({ params }: { params: { slug: string } })
   ])
 
   if (!hook) notFound()
+
+  // Normalize fields that may be absent on older API responses
+  const sourceArtifacts = hook.source_artifacts ?? []
+  const bodyHtml = hook.body_html ?? ''
+  const summary = hook.summary ?? ''
 
   const date = new Date(hook.generatedAt).toLocaleDateString('en-US', {
     month: 'long',
@@ -155,26 +160,26 @@ export default async function IdeaPage({ params }: { params: { slug: string } })
           <h1 className="font-serif text-[32px] md:text-[42px] leading-tight text-ink mb-4">
             {hook.title}
           </h1>
-          <p className="text-slate text-lg leading-relaxed mb-6">{hook.summary}</p>
+          <p className="text-slate text-lg leading-relaxed mb-6">{summary}</p>
           <div className="flex items-center gap-4 text-slate-light text-xs border-t border-[#E2E8F0] pt-4">
             <time dateTime={hook.generatedAt}>{date}</time>
-            {hook.source_artifacts.length > 0 && (
+            {sourceArtifacts.length > 0 && (
               <span>
-                {hook.source_artifacts.length} source{hook.source_artifacts.length !== 1 ? 's' : ''}
+                {sourceArtifacts.length} source{sourceArtifacts.length !== 1 ? 's' : ''}
               </span>
             )}
           </div>
         </header>
 
         {/* Article body */}
-        <HookArticle bodyHtml={hook.body_html} sourceArtifacts={hook.source_artifacts} />
+        <HookArticle bodyHtml={bodyHtml} sourceArtifacts={sourceArtifacts} />
 
         {/* Provenance footer */}
-        {hook.source_artifacts.length > 0 && (
+        {sourceArtifacts.length > 0 && (
           <aside className="mt-12 pt-8 border-t border-[#E2E8F0]">
             <Eyebrow text="SOURCES" className="mb-4" />
             <ol className="space-y-2">
-              {hook.source_artifacts.map((artifact, i) => (
+              {sourceArtifacts.map((artifact, i) => (
                 <li key={artifact.id} className="text-sm text-slate leading-snug">
                   <span className="text-slate-light mr-2">{i + 1}.</span>
                   <strong>{artifact.title}</strong>
