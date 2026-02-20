@@ -70,7 +70,7 @@ export function Nav() {
                 </li>
               )
             })}
-            {/* Divider + Peek link */}
+            {/* Divider + Peek behind link */}
             <li role="separator" className="w-px h-4 bg-[#E2E8F0] mx-1" aria-hidden />
             <li>
               <a
@@ -79,7 +79,7 @@ export function Nav() {
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
               >
-                Peek ↗
+                Peek behind ↗
               </a>
             </li>
           </ul>
@@ -138,7 +138,7 @@ export function Nav() {
                   onClick={() => setMenuOpen(false)}
                   className="block px-3 py-2 rounded-md text-xs font-normal text-slate-light hover:text-ink hover:bg-blue-light/50 transition-colors"
                 >
-                  Peek ↗
+                  Peek behind ↗
                 </a>
               </li>
             </ul>
